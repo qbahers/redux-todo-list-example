@@ -16,7 +16,7 @@ function todos(state = [], action) {
   case ADD_TODO:
     return [...state, {
       text: action.text,
-      completed, false
+      completed: false
     }];
   case COMPLETE_TODO:
     return [

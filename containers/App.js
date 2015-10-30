@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters }
+import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from '../actions';
 import AddTodo from '../components/AddTodo';
 import TodoList from '../components/TodoList';
 import Footer from '../components/Footer';
@@ -13,27 +13,17 @@ class App extends Component {
       <div>
         <AddTodo
           onAddClick={text =>
-            //dispatch(addTodo(text))
-            console.log('add todo', text)
+            dispatch(addTodo(text))
           } />
         <TodoList
-          {/* todos={visibleTodos} */}
-          todos={[{
-            text: 'Use Redux',
-            completed: true
-          }, {
-            text: 'Learn to connect it to React',
-            completed: false
-          }]}
+          todos={visibleTodos}
           onTodoClick={index =>
-            //dispatch(completeTodo(index))
-            console.log('filter clicked', index)
+            dispatch(completeTodo(index))
           } />
         <Footer
-          filter='SHOW_ALL'
-          onFilterChange={filter =>
-            //dispatch(setVisibilityFilter(nextFilter))
-            console.log('filter change', filter)
+          filter={visibilityFilter}
+          onFilterChange={nextFilter =>
+            dispatch(setVisibilityFilter(nextFilter))
           } />
       </div>
     );
@@ -43,7 +33,7 @@ class App extends Component {
 App.propTypes = {
   visibleTodos: PropTypes.arrayOf(PropTypes.shape({
     text: PropTypes.string.isRequired,
-    completed: propTypes.bool.isRequired
+    completed: PropTypes.bool.isRequired
   })),
   visibilityFilter: PropTypes.oneOf([
     'SHOW_ALL',
